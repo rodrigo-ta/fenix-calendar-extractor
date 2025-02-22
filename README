@@ -1,0 +1,2 @@
+The script will automatically navigate through the calendar weeks and extract all events within the specified date range. The extracted events will be saved as ICS files for each course. 
+To run the script, open the browser console (F12) and paste the script. Then press Enter to start the extraction process.
