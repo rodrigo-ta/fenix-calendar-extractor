@@ -1,2 +1,64 @@
-The script will automatically navigate through the calendar weeks and extract all events within the specified date range. The extracted events will be saved as ICS files for each course. 
-To run the script, open the browser console (F12) and paste the script. Then press Enter to start the extraction process.
+# Academic Calendar Scraper and ICS Exporter
+
+This script automates the extraction of academic events from a university calendar web interface and exports them as `.ics` files (iCalendar format), organized by course code.
+
+---
+
+## Features
+
+- Intercepts XMLHttpRequest responses to extract event data.
+- Dynamically detects the active session identifier (pid).
+- Parses and groups events by course code, extracting:
+  - Course identifier from the caption
+  - Start and end date/time
+  - Room number (if available)
+- Automatically clicks the "Next Week" button to navigate through the calendar interface.
+- Filters events that fall within a specified date range (`START_DATE` to `END_DATE`).
+- Exports each course's events to a separate `.ics` file, suitable for import into calendar applications like Google Calendar, Outlook, or Apple Calendar.
+
+---
+
+## How It Works
+
+1. **Injection**: Paste the script into the browser console while viewing the academic calendar page.
+2. **Monitoring**: The script listens for backend calendar data (XHR requests).
+3. **Extraction**: It parses relevant data from each weekly response, collecting:
+   - Date, time, caption, location, and course code
+4. **Navigation**: Clicks through the calendar interface week by week until the defined end date is reached.
+5. **Export**: When finished, the script generates `.ics` files and triggers downloads automatically—one file per course.
+
+---
+
+## Configuration
+
+At the top of the script, you can adjust the following:
+
+```javascript
+const START_DATE = new Date("2025-02-17");
+const END_DATE = new Date("2025-07-25");
+```
+
+Modify these values to match your desired semester or date range.
+
+---
+
+## Output
+
+- Files are named in the format: `course_<courseCode>.ics`
+- Each file contains properly formatted `VEVENT` entries with:
+  - `SUMMARY`: Original event caption
+  - `DTSTART` / `DTEND`: Start and end timestamps
+  - `LOCATION`: Extracted room number (if available)
+
+---
+
+## Requirements
+
+- A modern browser (tested on Chrome and Firefox)
+- Access to the university calendar platform that loads events via XHR
+
+---
+
+## Disclaimer
+
+This script is designed for educational and personal use only. Ensure compliance with your institution's policies before using automation tools on internal systems.
